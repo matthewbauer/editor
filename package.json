@@ -1,8 +1,9 @@
 {
   "dependencies": {
+    "chokidar": "^1.0.5",
     "ecstatic": "^0.8.0"
   },
-	"scripts": {
-		"start": "node server.js"
-	}
+  "scripts": {
+    "start": "node server.js"
+  }
 }
