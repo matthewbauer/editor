@@ -1,9 +1,55 @@
 {
   "dependencies": {
     "chokidar": "^1.0.5",
-    "ecstatic": "^0.8.0"
+    "denodeify": "^1.2.1",
+    "ecstatic": "^0.8.0",
+    "gitignore-parser": "0.0.2",
+    "jspm": "^0.16.2"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "install": "jspm install -y"
+  },
+  "main": "server.js",
+  "jspm": {
+    "directories": {},
+    "dependencies": {
+      "chokidar": "npm:chokidar@^1.0.5",
+      "codemirror": "github:codemirror/codemirror@^5.6.0",
+      "denodeify": "npm:denodeify@^1.2.1",
+      "ecstatic": "npm:ecstatic@^0.8.0",
+      "fs": "github:jspm/nodelibs-fs@^0.1.2",
+      "gitignore-parser": "npm:gitignore-parser@^0.0.2",
+      "http": "github:jspm/nodelibs-http@^1.7.1",
+      "ws": "github:websockets/ws@^0.8.0"
+    },
+    "devDependencies": {
+      "traceur": "github:jmcriffey/bower-traceur@0.0.91",
+      "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.91"
+    },
+    "overrides": {
+      "npm:chokidar@1.0.5": {
+        "map": {
+          "fsevents": "@empty"
+        }
+      },
+      "github:websockets/ws@0.8.0": {
+        "main": "index",
+        "dependencies": {
+          "util": "github:jspm/nodelibs-util@0.1.0",
+          "events": "github:jspm/nodelibs-events@0.1.1",
+          "crypto": "github:jspm/nodelibs-crypto@0.1.0",
+          "https": "github:jspm/nodelibs-https@0.1.0",
+          "stream": "github:jspm/nodelibs-stream@0.1.0",
+          "options": "npm:options@0.0.5",
+          "ultron": "npm:ultron@1.0.0",
+          "tls": "github:jspm/nodelibs-tls@0.1.0",
+          "zlib": "github:jspm/nodelibs-zlib@0.1.0",
+          "utf-8-validate": "npm:utf-8-validate@1.2.0",
+          "bufferutil": "npm:bufferutil@1.2.0",
+          "url": "github:jspm/nodelibs-url@0.1.0"
+        }
+      }
+    }
   }
 }
