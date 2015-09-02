@@ -1,84 +1,95 @@
 var fs = require('fs')
 var http = require('http')
-var ecstatic = require('ecstatic')
 var chokidar = require('chokidar')
 var denodeify = require('denodeify')
 var WebSocketServer = require('ws').Server
 var gitignore = require('gitignore-parser')
+var ecstatic = require('ecstatic')
 
 var server = http.createServer()
 var wss = new WebSocketServer({server: server})
 
-function message() {
-}
 var sockets = []
+var files = {}
+var watchers = {}
 wss.on('connection', function(socket) {
-  socket.on('message', message)
-  sockets.push(socket)
-})
+  socket.on('message', function(message) {
+    var data = JSON.parse(message)
+    if (data.type === 'watch') {
+      if (data.path) {
+        if (files[data.path])
+          socket.send(JSON.stringify({
+            type: 'content',
+            value: files[data.path]
+          }))
+        if (!watchers[data.path])
+          watchers[data.path] = []
+        watchers[data.path].push(socket)
+      }
+      else {
+        sockets.push(socket)
+      }
+    }
+    else if (data.type === 'changes') {
 
-var builtins = {}
-function read(path, url, headers) {
-  return denodeify(fs.readFile)(path).then(function(data, headers) {
-    builtins[url] = {
-      data: data,
-      headers: headers
     }
   })
-}
-read('index.html', '/', {
-  'Content-Type': 'text/html'
+  socket.send(JSON.stringify({
+    type: 'files',
+    files: Object.keys(files)
+  }))
 })
-function readFile(path, headers) {
-  return read(path, '/' + path, headers)
-}
-function readJS(path) {
-  return readFile(path, {
-    'Content-Type': 'application/javascript'
-  })
-}
-readJS('index.js')
-readJS('config.js')
 
-var files = {}
 var ignore
 chokidar.watch(process.cwd(), {
   cwd: process.cwd(),
   useFsEvents: false
 }).on('all', function(event, path) {
-  if (ignore && ignore.denies(path))
+  if (ignore && ignore.denies(path) || path.startsWith('.git/'))
     return
-  if (event === 'add' || event === 'change')
-    denodeify(fs.readFile)(path).then(function(data) {
-      files['/' + path] = data
+  if (event === 'add' || event === 'change') {
+    denodeify(fs.readFile)(path, 'utf-8').then(function(data) {
       if (path === '.gitignore') {
-        ignore = parser.compile(data)
+        ignore = gitignore.compile(data)
         for (var filename in files)
-          if (ignore.denies(path))
+          if (ignore.denies(filename.substr(1)))
             delete files[filename]
       }
+      if (ignore && ignore.denies(path))
+        return
+      if (watchers['/' + path])
+        watchers['/' + path].forEach(function(socket) {
+          if (socket.readyState !== socket.OPEN)
+            return
+          socket.send(JSON.stringify({
+            type: 'content',
+            value: data
+          }))
+        })
+      files['/' + path] = data
     })
+  }
   if (event === 'unlink')
     delete files['/' + path]
   sockets.forEach(function(socket) {
     if (socket.readyState !== socket.OPEN)
       return
-    socket.send(arguments)
+    socket.send(JSON.stringify({
+      type: event,
+      path: '/' + path
+    }))
   })
 })
 
+var ec = ecstatic({root: __dirname})
 server.on('request', function(request, response) {
   if (files[request.url]) {
     response.writeHead(200)
     response.write(files[request.url])
     response.end()
-  } else if (builtins[request.url]) {
-    response.writeHead(200, builtins[request.url].headers)
-    response.write(builtins[request.url].data)
-    response.end()
-  } else {
-    response.writeHead(404)
-    response.end()
+  }
+  else {
+    ec(request, response)
   }
 })
 

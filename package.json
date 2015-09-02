@@ -33,6 +33,18 @@
           "fsevents": "@empty"
         }
       },
+      "github:codemirror/codemirror@5.6.0": {
+        "dependencies": {
+          "css": "jspm:css@*"
+        },
+        "shim": {
+          "codemirror": {
+            "deps": [
+              "./codemirror.css!"
+            ]
+          }
+        }
+      },
       "github:websockets/ws@0.8.0": {
         "main": "index",
         "dependencies": {
