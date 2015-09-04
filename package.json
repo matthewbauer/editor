@@ -18,7 +18,8 @@
     "directories": {},
     "dependencies": {
       "chokidar": "npm:chokidar@^1.0.5",
-      "codemirror": "github:codemirror/codemirror@^5.6.0",
+      "codemirror": "npm:codemirror@^5.6.0",
+      "css": "github:systemjs/plugin-css@^0.1.15",
       "denodeify": "npm:denodeify@^1.2.1",
       "ecstatic": "npm:ecstatic@^0.8.0",
       "fs": "github:jspm/nodelibs-fs@^0.1.2",
@@ -40,12 +41,9 @@
           "fsevents": "@empty"
         }
       },
-      "github:codemirror/codemirror@5.6.0": {
-        "dependencies": {
-          "css": "jspm:css@*"
-        },
+      "npm:codemirror@5.6.0": {
         "shim": {
-          "codemirror": {
+          "lib/codemirror": {
             "deps": [
               "./codemirror.css!"
             ]

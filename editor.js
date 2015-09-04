@@ -1,16 +1,31 @@
+require('./editor.css!')
+
 var codemirror = require('codemirror')
+
 var sharejs = require('share/lib/client/index')
 var setImmediate = require('setimmediate')
 
+if (location.search === '?' || location.search === '')
+  location.search = '?blank'
+
 var editor = codemirror(document.body, {
-  autofocus: true
+  autofocus: true,
+  lineNumbers: true,
+  mode: 'javascript',
+  matchBrackets: true,
+  autoCloseBrackets: true,
+  showTrailingSpace: true,
+  foldGutter: true,
+
 })
+
+var COLLECTION = 'asdf'
 
 var proto = 'ws'
 var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
 
-var doc = share.get('asdf', 'asdf')
+var doc = share.get(COLLECTION, location.search.substr(1))
 doc.subscribe()
 
 function edit(context) {
@@ -93,5 +108,4 @@ doc.whenReady(function() {
 })
 
 window.addEventListener('beforeunload', function() {
-  doc.close()
 })
