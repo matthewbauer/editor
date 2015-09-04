@@ -36,24 +36,3 @@ function add(file) {
     return el
   }, document.body)
 }
-
-var proto = 'ws'
-var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
-
-socket.addEventListener('open', function() {
-  socket.send(JSON.stringify({
-    type: 'watch'
-  }))
-})
-
-socket.addEventListener('message', function(event) {
-  console.log(event.data)
-  var data = JSON.parse(event.data)
-  if (data.type === 'files')
-    for (var file of data.files)
-      add(file)
-  if (data.type === 'add' || data.type === 'addDir')
-    add(data.path)
-  if (data.type === 'unlink' || data.type === 'unlinkDir')
-    remove(data.path)
-})
