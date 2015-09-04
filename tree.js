@@ -1,3 +1,6 @@
+var sharejs = require('share/lib/client/index')
+var denodeify = require('denodeify')
+
 function click(event) {
   if (window.parent !== window) {
     event.preventDefault()
@@ -36,3 +39,23 @@ function add(file) {
     return el
   }, document.body)
 }
+
+var COLLECTION = 'files'
+
+var proto = 'ws'
+var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
+var share = new sharejs.Connection(socket)
+
+var query = share.createSubscribeQuery(COLLECTION, {}, {})
+query.on('insert', function(docs, idx) {
+  console.log('insert')
+})
+query.on('remove', function(docs, idx) {
+  console.log('remove')
+})
+query.on('move', function(docs, from, to) {
+  console.log('move')
+})
+query.on('change', function() {
+  console.log('change')
+})
