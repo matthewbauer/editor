@@ -11,13 +11,6 @@ var Duplex = require('stream').Duplex
 
 var sockets = []
 
-var ignore
-chokidar.watch(process.cwd(), {
-  cwd: process.cwd(),
-  useFsEvents: false
-}).on('all', function(event, path) {
-})
-
 var server = http.createServer()
 
 var ec = ecstatic({root: __dirname})
@@ -56,6 +49,49 @@ var shareClient = share.server.createClient({backend: backend})
 var wss = new WebSocketServer({server: server})
 wss.on('connection', function(socket) {
   shareClient.listen(getStream(socket))
+})
+
+var ignore
+chokidar.watch(process.cwd(), {
+  cwd: process.cwd(),
+  useFsEvents: false
+}).on('all', function(event, path) {
+  if (ignore && ignore.denies(path) || path.indexOf('.git/') === 0)
+    return
+  if (event === 'add')
+    return Promise.resolve().then(function() {
+      return denodeify(fs.readFile)(path, 'utf-8')
+    }).then(function(data) {
+      if (path === '.gitignore')
+        ignore = gitignore.compile(data)
+      return denodeify(backend.collection('files').submit)(path, {
+        create: {
+          type: 'text',
+          data: data
+        }
+      })
+    }).then(function() {
+      backend.fetchAndSubscribe('files', path, function(err, data, stream) {
+        stream.on('data', function(opData) {
+          livedb.ot.apply(data, opData)
+          return denodeify(fs.writeFile)(path, data.data)
+        })
+      })
+    })
+  // if (event === 'change')
+  //   return Promise.resolve().then(function() {
+  //     return denodeify(fs.readFile)(path, 'utf-8')
+  //   }).then(function(data) {
+  //     denodeify(backend.collection('files').submit)(path, {
+  //       op: [data]
+  //     })
+  //   })
+  if (event === 'unlink')
+    return Promise.resolve().then(function() {
+      return denodeify(backend.collection('files').submit)(path, {
+        del: true
+      })
+    })
 })
 
 server.listen(process.env.PORT || 8080)

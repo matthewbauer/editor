@@ -2,6 +2,7 @@ require('./editor.css!')
 
 var codemirror = require('codemirror')
 require('codemirror/mode/javascript/javascript')
+require('codemirror/mode/html/html')
 require('codemirror/addon/wrap/hardwrap')
 require('codemirror/addon/edit/closebrackets')
 require('codemirror/addon/edit/matchbrackets')
@@ -20,20 +21,19 @@ require('codemirror/addon/lint/javascript-lint')
 var sharejs = require('share/lib/client/index')
 var setImmediate = require('setimmediate')
 
-if (location.search === '?' || location.search === '')
-  location.search = '?blank'
+if (location.search === '')
+  location.search = '?index.html'
 
 var editor = codemirror(document.body, {
   autofocus: true,
   lineNumbers: true,
-  mode: 'javascript',
   matchBrackets: true,
   autoCloseBrackets: true,
   showTrailingSpace: true,
   foldGutter: true
 })
 
-var COLLECTION = 'asdf'
+var COLLECTION = 'files'
 
 var proto = 'ws'
 var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
@@ -86,8 +86,7 @@ function edit(context) {
 
     startPos += change.from.ch
 
-    if (change.to.line == change.from.line && change.to.ch == change.from.ch) {
-    } else {
+    if (change.to.line != change.from.line || change.to.ch != change.from.ch) {
       var delLen = 0
       for (var rm = 0; rm < change.removed.length; rm++)
         delLen += change.removed[rm].length
@@ -119,7 +118,4 @@ doc.whenReady(function() {
     return doc.create('text')
   if (doc.type && doc.type.name === 'text')
     return edit(doc.createContext())
-})
-
-window.addEventListener('beforeunload', function() {
 })
