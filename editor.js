@@ -1,4 +1,4 @@
-var codemirror = require('codemirror')
+var CodeMirror = require('codemirror')
 
 require('./editor.css!')
 require('codemirror/addon/hint/show-hint.css!')
@@ -31,7 +31,7 @@ var setImmediate = require('setimmediate')
 if (location.search === '')
   location.search = '?index.html'
 
-var editor = codemirror(document.body, {
+var editor = CodeMirror(document.body, {
   autofocus: true,
   lineNumbers: true,
   matchBrackets: true,
