@@ -1,6 +1,15 @@
-require('./editor.css!')
-
 var codemirror = require('codemirror')
+
+require('./editor.css!')
+require('codemirror/addon/hint/show-hint.css!')
+require('codemirror/addon/lint/lint.css!')
+require('codemirror/addon/fold/foldgutter.css!')
+require('codemirror/addon/display/fullscreen.css!')
+require('codemirror/theme/material.css!')
+require('codemirror/theme/midnight.css!')
+require('codemirror/theme/xq-dark.css!')
+
+require('codemirror/addon/display/fullscreen')
 require('codemirror/mode/javascript/javascript')
 require('codemirror/mode/htmlmixed/htmlmixed')
 require('codemirror/addon/wrap/hardwrap')
@@ -9,19 +18,12 @@ require('codemirror/addon/edit/matchbrackets')
 require('codemirror/addon/edit/trailingspace')
 require('codemirror/addon/selection/active-line')
 require('codemirror/addon/fold/foldgutter')
-require('codemirror/addon/fold/foldgutter.css!')
 require('codemirror/addon/fold/indent-fold')
 require('codemirror/addon/fold/foldcode')
 require('codemirror/addon/hint/javascript-hint')
 require('codemirror/addon/hint/show-hint')
-require('codemirror/addon/hint/show-hint.css!')
-require('codemirror/addon/hint/javascript-hint')
 require('codemirror/addon/lint/lint')
-require('codemirror/addon/lint/lint.css!')
 require('codemirror/addon/lint/javascript-lint')
-require('codemirror/theme/material.css!')
-require('codemirror/theme/midnight.css!')
-require('codemirror/theme/xq-dark.css!')
 
 var sharejs = require('share/lib/client/index')
 var setImmediate = require('setimmediate')
@@ -41,7 +43,8 @@ var editor = codemirror(document.body, {
   coverGutterNextToScrollbar: true,
   cursorScrollMargin: 3,
   electricChars: true,
-  theme: 'xq-dark'
+  theme: 'material',
+  fullScreen: true
 })
 
 var COLLECTION = 'files'

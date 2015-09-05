@@ -78,14 +78,17 @@ chokidar.watch(process.cwd(), {
         })
       })
     })
-  // if (event === 'change')
-  //   return Promise.resolve().then(function() {
-  //     return denodeify(fs.readFile)(path, 'utf-8')
-  //   }).then(function(data) {
-  //     denodeify(backend.collection('files').submit)(path, {
-  //       op: [data]
-  //     })
-  //   })
+  if (event === 'change')
+    return Promise.resolve().then(function() {
+      return denodeify(backend.collection('files').fetch)(path)
+    }).then(function(snapshot) {
+      return denodeify(fs.readFile)(path, 'utf-8').then(function(data) {
+        if (snapshot.data !== data)
+          return denodeify(backend.collection('files').submit)(path, {
+            op: [{d: snapshot.data.length}, data]
+          })
+      })
+    })
   if (event === 'unlink')
     return Promise.resolve().then(function() {
       return denodeify(backend.collection('files').submit)(path, {
