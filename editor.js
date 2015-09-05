@@ -5,13 +5,50 @@ require('codemirror/addon/hint/show-hint.css!')
 require('codemirror/addon/lint/lint.css!')
 require('codemirror/addon/fold/foldgutter.css!')
 require('codemirror/addon/display/fullscreen.css!')
-require('codemirror/theme/material.css!')
-require('codemirror/theme/midnight.css!')
-require('codemirror/theme/xq-dark.css!')
+require('codemirror/theme/monokai.css!')
+
+require('codemirror/mode/javascript/javascript')
+require('codemirror/mode/apl/apl')
+require('codemirror/mode/asciiarmor/asciiarmor')
+require('codemirror/mode/clike/clike')
+require('codemirror/mode/cmake/cmake')
+require('codemirror/mode/clojure/clojure')
+require('codemirror/mode/coffeescript/coffeescript')
+require('codemirror/mode/css/css')
+require('codemirror/mode/d/d')
+require('codemirror/mode/commonlisp/commonlisp')
+require('codemirror/mode/dockerfile/dockerfile')
+require('codemirror/mode/dart/dart')
+require('codemirror/mode/diff/diff')
+require('codemirror/mode/go/go')
+require('codemirror/mode/haskell/haskell')
+require('codemirror/mode/http/http')
+require('codemirror/mode/idl/idl')
+require('codemirror/mode/jade/jade')
+require('codemirror/mode/markdown/markdown')
+require('codemirror/mode/php/php')
+require('codemirror/mode/pegjs/pegjs')
+require('codemirror/mode/pascal/pascal')
+require('codemirror/mode/properties/properties')
+require('codemirror/mode/python/python')
+require('codemirror/mode/nginx/nginx')
+require('codemirror/mode/r/r')
+require('codemirror/mode/ruby/ruby')
+require('codemirror/mode/rust/rust')
+require('codemirror/mode/sass/sass')
+require('codemirror/mode/shell/shell')
+require('codemirror/mode/scheme/scheme')
+require('codemirror/mode/sql/sql')
+require('codemirror/mode/swift/swift')
+require('codemirror/mode/stylus/stylus')
+require('codemirror/mode/vb/vb')
+require('codemirror/mode/vbscript/vbscript')
+require('codemirror/mode/yaml/yaml')
+require('codemirror/mode/meta')
+
+require('codemirror/keymap/sublime')
 
 require('codemirror/addon/display/fullscreen')
-require('codemirror/mode/javascript/javascript')
-require('codemirror/mode/htmlmixed/htmlmixed')
 require('codemirror/addon/wrap/hardwrap')
 require('codemirror/addon/edit/closebrackets')
 require('codemirror/addon/edit/matchbrackets')
@@ -27,9 +64,13 @@ require('codemirror/addon/lint/javascript-lint')
 
 var sharejs = require('share/lib/client/index')
 var setImmediate = require('setimmediate')
+var mime = require('mime')
 
+var filename
 if (location.search === '')
-  location.search = '?index.html'
+  filename = 'index.html'
+else
+  filename = location.search.substr(1)
 
 var editor = CodeMirror(document.body, {
   autofocus: true,
@@ -43,8 +84,10 @@ var editor = CodeMirror(document.body, {
   coverGutterNextToScrollbar: true,
   cursorScrollMargin: 3,
   electricChars: true,
-  theme: 'material',
-  fullScreen: true
+  theme: 'monokai',
+  fullScreen: true,
+  mode: mime.lookup(filename),
+  keyMap: 'sublime'
 })
 
 var COLLECTION = 'files'
@@ -53,7 +96,7 @@ var proto = 'ws'
 var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
 
-var doc = share.get(COLLECTION, location.search.substr(1))
+var doc = share.get(COLLECTION, filename)
 doc.subscribe()
 
 function edit(context) {
