@@ -74,7 +74,8 @@ chokidar.watch(process.cwd(), {
       backend.fetchAndSubscribe('files', path, function(err, data, stream) {
         stream.on('data', function(opData) {
           livedb.ot.apply(data, opData)
-          return denodeify(fs.writeFile)(path, data.data)
+          if (data.data)
+            return denodeify(fs.writeFile)(path, data.data)
         })
       })
     })
