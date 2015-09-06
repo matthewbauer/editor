@@ -6,7 +6,8 @@ tree.setAttribute('src', './tree')
 document.body.appendChild(tree)
 
 var editor = document.createElement('iframe')
-editor.style.width = '80%'
+editor.style.width = '75%'
+editor.setAttribute('src', './help')
 document.body.appendChild(editor)
 
 window.addEventListener('message', function(event) {

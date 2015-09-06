@@ -62,10 +62,15 @@ chokidar.watch(process.cwd(), {
       return denodeify(backend.collection(COLLECTION).fetch)(path)
     }).then(function(snapshot) {
       return denodeify(fs.readFile)(path, 'utf-8').then(function(data) {
-        if (snapshot.data !== data)
+        if (snapshot.data !== data) {
+          var op = []
+          if (snapshot.data.length > 0)
+            op.push({d: snapshot.data.length})
+          op.push(data)
           return denodeify(backend.collection(COLLECTION).submit)(path, {
-            op: [{d: snapshot.data.length}, data]
+            op: op
           })
+        }
       })
     })
   if (event === 'unlink')
