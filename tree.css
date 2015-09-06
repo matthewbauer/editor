@@ -3,9 +3,13 @@ html, body {
   color: #f8f8f2;
   font-size: 16px;
   line-height: 2;
+  width: 150px;
+  height: 100%;
+  margin: auto;
 }
 
 a, a:visited {
   color: #f8f8f2;
   text-decoration: none;
+  cursor: default;
 }
