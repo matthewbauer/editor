@@ -10,7 +10,7 @@
     "livedb": "^0.5.13",
     "opn": "^3.0.2",
     "share": "^0.7.40",
-    "ws": "^0.8.0"
+    "websocket-stream": "matthewbauer/websocket-stream#json"
   },
   "scripts": {
     "start": "node server.js",
@@ -38,8 +38,7 @@
       "opn": "npm:opn@^3.0.2",
       "setimmediate": "npm:setimmediate@^1.0.2",
       "share": "npm:share@^0.7.40",
-      "stream": "github:jspm/nodelibs-stream@^0.1.0",
-      "ws": "github:websockets/ws@^0.8.0"
+      "websocket-stream": "npm:websocket-stream@^2.0.2"
     },
     "devDependencies": {
       "traceur": "github:jmcriffey/bower-traceur@0.0.91",
@@ -49,23 +48,6 @@
       "npm:chokidar@1.0.5": {
         "map": {
           "fsevents": "@empty"
-        }
-      },
-      "github:websockets/ws@0.8.0": {
-        "main": "index",
-        "dependencies": {
-          "util": "github:jspm/nodelibs-util@0.1.0",
-          "events": "github:jspm/nodelibs-events@0.1.1",
-          "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-          "https": "github:jspm/nodelibs-https@0.1.0",
-          "stream": "github:jspm/nodelibs-stream@0.1.0",
-          "options": "npm:options@0.0.5",
-          "ultron": "npm:ultron@1.0.0",
-          "tls": "github:jspm/nodelibs-tls@0.1.0",
-          "zlib": "github:jspm/nodelibs-zlib@0.1.0",
-          "utf-8-validate": "npm:utf-8-validate@1.2.0",
-          "bufferutil": "npm:bufferutil@1.2.0",
-          "url": "github:jspm/nodelibs-url@0.1.0"
         }
       },
       "npm:livedb@0.5.13": {
