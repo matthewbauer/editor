@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var fs = require('fs')
 var http = require('http')
 var chokidar = require('chokidar')
@@ -8,6 +10,7 @@ var ecstatic = require('ecstatic')
 var livedb = require('livedb')
 var share = require('share')
 var Duplex = require('stream').Duplex
+var opn = require('opn')
 
 var sockets = []
 
@@ -97,4 +100,7 @@ chokidar.watch(process.cwd(), {
     })
 })
 
-server.listen(process.env.PORT || 8080)
+var port = process.env.PORT || 8080
+server.listen(port)
+
+opn('http://localhost:' + port + '/editor')
