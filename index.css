@@ -13,4 +13,5 @@ html, body {
 iframe {
   border: 0;
   height: 100%;
+  overflow: hidden;
 }

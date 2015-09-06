@@ -1,12 +1,12 @@
 require('./index.css!')
 
 var tree = document.createElement('iframe')
-tree.style.width = '15%'
+tree.style.width = '20%'
 tree.setAttribute('src', './tree')
 document.body.appendChild(tree)
 
 var editor = document.createElement('iframe')
-editor.style.width = '85%'
+editor.style.width = '80%'
 document.body.appendChild(editor)
 
 window.addEventListener('message', function(event) {
