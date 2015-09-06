@@ -53,8 +53,7 @@ wss.on('connection', function(socket) {
 
 var ignore
 chokidar.watch(process.cwd(), {
-  cwd: process.cwd(),
-  useFsEvents: false
+  cwd: process.cwd()
 }).on('all', function(event, path) {
   if (ignore && ignore.denies(path) || path.indexOf('.git/') === 0)
     return
