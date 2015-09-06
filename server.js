@@ -28,6 +28,8 @@ var wss = websocket.createServer({server: server}, function(stream) {
   shareClient.listen(stream)
 })
 
+var COLLECTION = 'files'
+
 var ignore
 chokidar.watch(process.cwd(), {
   cwd: process.cwd()
@@ -40,14 +42,14 @@ chokidar.watch(process.cwd(), {
     }).then(function(data) {
       if (path === '.gitignore')
         ignore = gitignore.compile(data)
-      return denodeify(backend.collection('files').submit)(path, {
+      return denodeify(backend.collection(COLLECTION).submit)(path, {
         create: {
           type: 'text',
           data: data
         }
       })
     }).then(function() {
-      backend.fetchAndSubscribe('files', path, function(err, data, stream) {
+      backend.fetchAndSubscribe(COLLECTION, path, function(err, data, stream) {
         stream.on('data', function(opData) {
           livedb.ot.apply(data, opData)
           if (data.data)
@@ -57,18 +59,18 @@ chokidar.watch(process.cwd(), {
     })
   if (event === 'change')
     return Promise.resolve().then(function() {
-      return denodeify(backend.collection('files').fetch)(path)
+      return denodeify(backend.collection(COLLECTION).fetch)(path)
     }).then(function(snapshot) {
       return denodeify(fs.readFile)(path, 'utf-8').then(function(data) {
         if (snapshot.data !== data)
-          return denodeify(backend.collection('files').submit)(path, {
+          return denodeify(backend.collection(COLLECTION).submit)(path, {
             op: [{d: snapshot.data.length}, data]
           })
       })
     })
   if (event === 'unlink')
     return Promise.resolve().then(function() {
-      return denodeify(backend.collection('files').submit)(path, {
+      return denodeify(backend.collection(COLLECTION).submit)(path, {
         del: true
       })
     })
@@ -77,4 +79,4 @@ chokidar.watch(process.cwd(), {
 var port = process.env.PORT || 8080
 server.listen(port)
 
-opn('http://localhost:' + port + '/editor')
+opn('http://localhost:' + port)
