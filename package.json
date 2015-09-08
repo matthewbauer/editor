@@ -9,6 +9,7 @@
     "jspm": "^0.16.2",
     "livedb": "^0.5.13",
     "opn": "^3.0.2",
+    "promise": "^7.0.4",
     "share": "^0.7.40",
     "websocket-stream": "matthewbauer/websocket-stream#json"
   },

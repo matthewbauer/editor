@@ -11,6 +11,7 @@ var share = require('share')
 var Duplex = require('stream').Duplex
 var opn = require('opn')
 var websocket = require('websocket-stream')
+var Promise = require('promise')
 
 var sockets = []
 
