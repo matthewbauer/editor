@@ -95,18 +95,10 @@ doc.whenReady(function() {
       cursorScrollMargin: 3,
       electricChars: true,
       extraKeys: {
-        Left: function() {
-          softNav.call(editor, -1, 'moveH')
-        },
-        Right: function() {
-          softNav.call(editor, 1, 'moveH')
-        },
-        Backspace: function() {
-          softNav.call(editor, -1, 'deleteH')
-        },
-        Delete: function() {
-          softNav.call(editor, 1, 'deleteH')
-        }
+        Left: 'goSoftLeft',
+        Right: 'goSoftRight',
+        Backspace: 'delSoftBefore',
+        Delete: 'delSoftAfter'
       },
       foldGutter: true,
       fullScreen: true,

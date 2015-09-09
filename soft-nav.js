@@ -93,4 +93,17 @@ function softNav(direction, functionName) {
   this[functionName](overallJump, 'char')
 }
 
+CodeMirror.commands.goSoftLeft = function(cm) {
+  softNav.call(cm, -1, 'moveH')
+}
+CodeMirror.commands.goSoftRight = function(cm) {
+  softNav.call(cm, 1, 'moveH')
+}
+CodeMirror.commands.delSoftBefore = function(cm) {
+  softNav.call(cm, -1, 'deleteH')
+}
+CodeMirror.commands.delSoftAfter = function(cm) {
+  softNav.call(cm, 1, 'deleteH')
+}
+
 module.exports = softNav
