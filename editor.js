@@ -1,5 +1,11 @@
+var sharejs = require('share/lib/client/index')
 var CodeMirror = require('codemirror')
-var softNav = require('./soft-nav.js')
+
+var softNav = require('./soft-nav')
+
+require('./load-share')
+require('./set-indent')
+require('./detect-mode')
 
 require('./editor.css!')
 require('codemirror/addon/hint/show-hint.css!')
@@ -63,51 +69,11 @@ require('codemirror/addon/hint/show-hint')
 require('codemirror/addon/lint/lint')
 require('codemirror/addon/lint/javascript-lint')
 
-var sharejs = require('share/lib/client/index')
-var setImmediate = require('setimmediate')
-var mime = require('mime')
-
 var filename
 if (location.search === '')
   filename = 'index.html'
 else
   filename = location.search.substr(1)
-
-var editor = CodeMirror(document.body, {
-  autofocus: true,
-  autoCloseBrackets: true,
-  autoCloseTags: true,
-  coverGutterNextToScrollbar: true,
-  cursorScrollMargin: 3,
-  electricChars: true,
-  extraKeys: {
-    Left: function() {
-      softNav.call(editor, -1, 'moveH')
-    },
-    Right: function() {
-      softNav.call(editor, 1, 'moveH')
-    },
-    Backspace: function() {
-      softNav.call(editor, -1, 'deleteH')
-    },
-    Delete: function() {
-      softNav.call(editor, 1, 'deleteH')
-    }
-  },
-  foldGutter: true,
-  fullScreen: true,
-  indentWithTabs: true,
-  keyMap: 'sublime',
-  lineNumbers: true,
-  matchBrackets: true,
-  mode: mime.lookup(filename),
-  showTrailingSpace: true,
-  smartIndent: true,
-  theme: 'monokai',
-  indentUnit: 2,
-  tabSize: 2,
-  indentWithTabs: false
-})
 
 var COLLECTION = 'files'
 
@@ -117,81 +83,42 @@ var share = new sharejs.Connection(socket)
 
 var doc = share.get(COLLECTION, filename)
 doc.subscribe()
-
-function edit(context) {
-  editor.setValue(context.get())
-
-  var suppress = false
-
-  function lock(fn) {
-    suppress = true
-    fn()
-    suppress = false
-  }
-
-  context.onInsert = function(pos, text) {
-    lock(function() {
-      editor.replaceRange(text, editor.posFromIndex(pos))
-    })
-  }
-
-  context.onRemove = function(pos, length) {
-    lock(function() {
-      var from = editor.posFromIndex(pos)
-      var to = editor.posFromIndex(pos + length)
-      editor.replaceRange('', from, to)
-    })
-  }
-
-  function check() {
-    setImmediate(function () {
-      var text = context.get()
-      if (editor.getValue() != text)
-        editor.setValue(text)
-    })
-  }
-
-  function applyToShareJS(cm, change) {
-    var startPos = 0
-    var i = 0
-
-    while (i < change.from.line) {
-      startPos += editor.lineInfo(i).text.length + 1
-      i++
-    }
-
-    startPos += change.from.ch
-
-    if (change.to.line != change.from.line || change.to.ch != change.from.ch) {
-      var delLen = 0
-      for (var rm = 0; rm < change.removed.length; rm++)
-        delLen += change.removed[rm].length
-      delLen += change.removed.length - 1
-      context.remove(startPos, delLen)
-    }
-    if (change.text)
-      context.insert(startPos, change.text.join('\n'))
-    if (change.next)
-      applyToShareJS(editor, change.next)
-  }
-
-  function onLocalChange(editor, change) {
-    if (suppress)
-      return
-    applyToShareJS(editor, change)
-  }
-
-  editor.on('change', onLocalChange)
-  editor.detachShareJsDoc = function () {
-    context.onRemove = null
-    context.onInsert = null
-    editor.off('change', onLocalChange)
-  }
-}
-
 doc.whenReady(function() {
   if (!doc.type)
     return doc.create('text')
-  if (doc.type && doc.type.name === 'text')
-    return edit(doc.createContext())
+  if (doc.type && doc.type.name === 'text') {
+    var editor = CodeMirror(document.body, {
+      autofocus: true,
+      autoCloseBrackets: true,
+      autoCloseTags: true,
+      coverGutterNextToScrollbar: true,
+      cursorScrollMargin: 3,
+      electricChars: true,
+      extraKeys: {
+        Left: function() {
+          softNav.call(editor, -1, 'moveH')
+        },
+        Right: function() {
+          softNav.call(editor, 1, 'moveH')
+        },
+        Backspace: function() {
+          softNav.call(editor, -1, 'deleteH')
+        },
+        Delete: function() {
+          softNav.call(editor, 1, 'deleteH')
+        }
+      },
+      foldGutter: true,
+      fullScreen: true,
+      indentWithTabs: true,
+      keyMap: 'sublime',
+      lineNumbers: true,
+      matchBrackets: true,
+      showTrailingSpace: true,
+      smartIndent: true,
+      theme: 'monokai',
+      fileName: filename,
+      share: doc.createContext()
+    })
+  }
 })
