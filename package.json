@@ -39,6 +39,7 @@
       "opn": "npm:opn@^3.0.2",
       "setimmediate": "npm:setimmediate@^1.0.2",
       "share": "npm:share@^0.7.40",
+      "underscore": "npm:underscore@^1.8.3",
       "websocket-stream": "npm:websocket-stream@^2.0.2"
     },
     "devDependencies": {

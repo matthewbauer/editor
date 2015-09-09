@@ -1,4 +1,5 @@
 var CodeMirror = require('codemirror')
+var softNav = require('./soft-nav.js')
 
 require('./editor.css!')
 require('codemirror/addon/hint/show-hint.css!')
@@ -74,20 +75,38 @@ else
 
 var editor = CodeMirror(document.body, {
   autofocus: true,
-  lineNumbers: true,
-  matchBrackets: true,
   autoCloseBrackets: true,
   autoCloseTags: true,
-  showTrailingSpace: true,
-  foldGutter: true,
-  matchBrackets: true,
   coverGutterNextToScrollbar: true,
   cursorScrollMargin: 3,
   electricChars: true,
-  theme: 'monokai',
+  extraKeys: {
+    Left: function() {
+      softNav.call(editor, -1, 'moveH')
+    },
+    Right: function() {
+      softNav.call(editor, 1, 'moveH')
+    },
+    Backspace: function() {
+      softNav.call(editor, -1, 'deleteH')
+    },
+    Delete: function() {
+      softNav.call(editor, 1, 'deleteH')
+    }
+  },
+  foldGutter: true,
   fullScreen: true,
+  indentWithTabs: true,
+  keyMap: 'sublime',
+  lineNumbers: true,
+  matchBrackets: true,
   mode: mime.lookup(filename),
-  keyMap: 'sublime'
+  showTrailingSpace: true,
+  smartIndent: true,
+  theme: 'monokai',
+  indentUnit: 2,
+  tabSize: 2,
+  indentWithTabs: false
 })
 
 var COLLECTION = 'files'
