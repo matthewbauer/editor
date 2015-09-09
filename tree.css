@@ -13,3 +13,7 @@ a, a:visited {
   text-decoration: none;
   cursor: default;
 }
+
+.entry {
+  margin-left: 20px;
+}

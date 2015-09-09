@@ -1,3 +1,5 @@
+// detect the indent level based on sindresorhus' detect-indent
+
 var CodeMirror = require('codemirror')
 var detectIndent = require('detect-indent')
 

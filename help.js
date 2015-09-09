@@ -1,3 +1,5 @@
+// some basic help, better styling needed
+
 require('./help.css!')
 
 var text = document.createElement('div')

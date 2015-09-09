@@ -1,3 +1,4 @@
+// Navigate 'soft' with two space indention
 // This is based on Bracket's softNav functions
 
 var CodeMirror = require('codemirror')
@@ -9,13 +10,13 @@ function getColOffset(pos) {
     var column  = 0
 
     for (var i = 0; i < line.length; i++) {
-        if (line[i] === '\t') {
-            if (tabSize === null)
-                tabSize = this.getOption('indentUnit')
-            if (tabSize > 0)
-                column += (tabSize - (column % tabSize))
+      if (line[i] === '\t') {
+        if (tabSize === null)
+          tabSize = this.getOption('indentUnit')
+        if (tabSize > 0)
+          column += (tabSize - (column % tabSize))
         } else
-            column++
+          column++
     }
     return column
 }

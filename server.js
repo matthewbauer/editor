@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// ideally this will run from node and jspm but currently just Node works
+
 var fs = require('fs')
 var http = require('http')
 var chokidar = require('chokidar')
@@ -30,6 +32,7 @@ var wss = websocket.createServer({server: server}, function(stream) {
 })
 
 var COLLECTION = 'files'
+var collection = backend.collection('files')
 
 var ignore
 chokidar.watch(process.cwd(), {
@@ -43,7 +46,7 @@ chokidar.watch(process.cwd(), {
     }).then(function(data) {
       if (path === '.gitignore')
         ignore = gitignore.compile(data)
-      return denodeify(backend.collection(COLLECTION).submit)(path, {
+      return denodeify(collection.submit)(path, {
         create: {
           type: 'text',
           data: data

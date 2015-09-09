@@ -1,3 +1,5 @@
+// detect the 'mode' to use based on file extension
+
 var CodeMirror = require('codemirror')
 var mime = require('mime')
 

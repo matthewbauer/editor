@@ -1,3 +1,5 @@
+// add hooks from ShareJS context
+
 var CodeMirror = require('codemirror')
 var setImmediate = require('setimmediate')
 

@@ -1,19 +1,18 @@
-var sharejs = require('share/lib/client/index')
-var CodeMirror = require('codemirror')
-
-var softNav = require('./soft-nav')
-
-require('./load-share')
-require('./set-indent')
-require('./detect-mode')
+// bootstrap CodeMirror and ShareJS
 
 require('./editor.css!')
+
+// CodeMirror stuff
+var CodeMirror = require('codemirror')
+require('./soft-nav')
+require('./load-share')
+require('./detect-indent')
+require('./detect-mode')
 require('codemirror/addon/hint/show-hint.css!')
 require('codemirror/addon/lint/lint.css!')
 require('codemirror/addon/fold/foldgutter.css!')
 require('codemirror/addon/display/fullscreen.css!')
 require('codemirror/theme/monokai.css!')
-
 require('codemirror/mode/javascript/javascript')
 require('codemirror/mode/apl/apl')
 require('codemirror/mode/asciiarmor/asciiarmor')
@@ -52,9 +51,7 @@ require('codemirror/mode/vb/vb')
 require('codemirror/mode/vbscript/vbscript')
 require('codemirror/mode/yaml/yaml')
 require('codemirror/mode/meta')
-
 require('codemirror/keymap/sublime')
-
 require('codemirror/addon/display/fullscreen')
 require('codemirror/addon/wrap/hardwrap')
 require('codemirror/addon/edit/closebrackets')
@@ -69,6 +66,7 @@ require('codemirror/addon/hint/show-hint')
 require('codemirror/addon/lint/lint')
 require('codemirror/addon/lint/javascript-lint')
 
+// ShareJS stuff
 var filename
 if (location.search === '')
   filename = 'index.html'
@@ -76,8 +74,8 @@ else
   filename = location.search.substr(1)
 
 var COLLECTION = 'files'
-
 var proto = 'ws'
+var sharejs = require('share/lib/client/index')
 var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
 
@@ -100,17 +98,17 @@ doc.whenReady(function() {
         Backspace: 'delSoftBefore',
         Delete: 'delSoftAfter'
       },
+      fileName: filename,
       foldGutter: true,
       fullScreen: true,
       indentWithTabs: true,
       keyMap: 'sublime',
       lineNumbers: true,
       matchBrackets: true,
+      share: doc.createContext(),
       showTrailingSpace: true,
       smartIndent: true,
-      theme: 'monokai',
-      fileName: filename,
-      share: doc.createContext()
+      theme: 'monokai'
     })
   }
 })
