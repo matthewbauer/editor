@@ -4,6 +4,8 @@ var CodeMirror = require('codemirror')
 var setImmediate = require('setimmediate')
 
 function hookShare(cm, share) {
+  if (!share)
+    return
   cm.setValue(share.get())
 
   var suppress = false

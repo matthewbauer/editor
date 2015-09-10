@@ -18,38 +18,35 @@ function add(doc) {
   parts.reduce(function(prev, part, index) {
     var el = prev.getElementsByClassName(part)[0]
     if (!el) {
-      el = document.createElement('div')
-      el.classList.add('entry')
-
-      var link = document.createElement('a')
-      link.textContent = part
-
       if (index === parts.length - 1) {
+        el = document.createElement('a')
+        el.classList.add('entry')
+        el.textContent = part
         el.classList.add('extension-' + part.substr(part.lastIndexOf('.') + 1))
         el.classList.add('file')
         el.classList.add('file-' + part)
-        link.setAttribute('href', 'editor?' + doc.name)
-        link.setAttribute('target', '_blank')
-        link.addEventListener('click', function(event) {
+        el.addEventListener('click', function(event) {
+          Array.prototype.forEach.call(document.getElementsByClassName('selected'), function(el) {
+            el.classList.remove('selected')
+          })
+          el.classList.add('selected')
           if (window.parent !== window) {
             event.preventDefault()
-            el.classList.add('select')
             window.parent.postMessage(JSON.stringify({
-              type: 'open',
-              href: event.target.getAttribute('href')
+              type: 'edit',
+              filename: doc.name,
+              collection: 'files'
             }), '*')
           }
         })
+        el.setAttribute('href', 'editor?' + doc.name)
+        el.setAttribute('target', '_blank')
       }
       else {
+        el = document.createElement('div')
         el.classList.add('directory')
         el.classList.add('directory-' + part)
-        link.setAttribute('href', '#')
-        link.addEventListener('click', function(event) {
-        })
       }
-
-      el.appendChild(link)
 
       var found = false
       for (var child of Array.prototype.slice.call(prev.children)) {

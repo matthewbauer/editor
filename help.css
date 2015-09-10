@@ -1,14 +1,4 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #272822;
-  color: #f8f8f2;
-  font-size: 32px;
-  line-height: 1.5;
-  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier;
-}
-
-div {
-  margin: 200px 0;
-  text-align: center;
-}
+<!doctype html>
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>System.import('./help')</script>

@@ -1,7 +1,4 @@
-// some basic help, better styling needed
-
-require('./help.css!')
-
-var text = document.createElement('div')
-text.textContent = 'click a file to the left to edit'
-document.body.appendChild(text)
+<!doctype html>
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>System.import('./help')</script>

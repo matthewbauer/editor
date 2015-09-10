@@ -8,12 +8,12 @@ document.body.appendChild(tree)
 
 var editor = document.createElement('iframe')
 editor.style.width = '75%'
-editor.setAttribute('src', './help')
+editor.setAttribute('src', './editor')
 editor.classList.add('editor')
 document.body.appendChild(editor)
 
 window.addEventListener('message', function(event) {
   var data = JSON.parse(event.data)
-  if (data.type === 'open')
-    editor.setAttribute('src', data.href)
+  if (data.type === 'edit')
+    editor.contentWindow.postMessage(event.data, '*')
 })
