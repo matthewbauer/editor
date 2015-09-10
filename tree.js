@@ -15,7 +15,7 @@ function remove(doc) {
 
 function add(doc) {
   var parts = doc.name.split('/')
-  parts.reduce(function(prev, part, index){
+  parts.reduce(function(prev, part, index) {
     var el = prev.getElementsByClassName(part)[0]
     if (!el) {
       el = document.createElement('div')
@@ -50,7 +50,16 @@ function add(doc) {
       }
 
       el.appendChild(link)
-      prev.appendChild(el)
+
+      var found = false
+      for (var child of Array.prototype.slice.call(prev.children)) {
+        if (child.firstChild.textContent < part) {
+          found = true
+          prev.insertBefore(el, child)
+        }
+      }
+      if (!found)
+        prev.appendChild(el)
     }
     return el
   }, document.body)

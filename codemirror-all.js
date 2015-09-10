@@ -163,7 +163,7 @@ define([
   'codemirror/addon/edit/closebrackets',
   'codemirror/addon/edit/closetag',
   'codemirror/addon/edit/continuelist',
-  'codemirror/addon/edit/m  atchbrackets',
+  'codemirror/addon/edit/matchbrackets',
   'codemirror/addon/edit/matchtags',
   'codemirror/addon/edit/trailingspace',
   'codemirror/addon/fold/brace-fold',
