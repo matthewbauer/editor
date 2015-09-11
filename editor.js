@@ -2,7 +2,7 @@
 
 require('./editor.css!')
 
-var CodeMirror = require('codemirror-all')
+var CodeMirror = require('./codemirror-all')
 var editor = CodeMirror(document.body, {
   autofocus: true,
   autoCloseBrackets: true,
@@ -18,7 +18,6 @@ var editor = CodeMirror(document.body, {
   },
   foldGutter: true,
   fullScreen: true,
-  indentWithTabs: true,
   keyMap: 'sublime',
   lineNumbers: true,
   matchBrackets: true,
