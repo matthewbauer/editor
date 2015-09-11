@@ -17,7 +17,11 @@ var editor = CodeMirror(document.body, {
     Backspace: 'delSoftBefore',
     Delete: 'delSoftAfter',
     Enter: 'newlineAndIndentContinueMarkdownList',
-    'Ctrl-Space': 'autocomplete'
+    'Ctrl-Space': 'autocomplete',
+    'Ctrl-\\': function() {
+      if (window.parent !== window)
+        window.parent.postMessage('toggleTree', '*')
+    }
   },
   foldGutter: true,
   fullScreen: true,

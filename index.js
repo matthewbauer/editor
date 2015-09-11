@@ -13,6 +13,10 @@ editor.classList.add('editor')
 document.body.appendChild(editor)
 
 window.addEventListener('message', function(event) {
+  if (event.data === 'toggleTree') {
+    tree.classList.toggle('hidden')
+    return
+  }
   var data = JSON.parse(event.data)
   if (data.type === 'edit') {
     editor.contentWindow.postMessage(event.data, '*')
