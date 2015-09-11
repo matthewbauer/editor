@@ -6,6 +6,10 @@ var setImmediate = require('setimmediate')
 function hookShare(cm, share) {
   if (!share)
     return
+
+  if (cm.detachShareJsDoc)
+    cm.detachShareJsDoc()
+
   cm.setValue(share.get())
 
   var suppress = false
