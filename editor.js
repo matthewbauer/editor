@@ -22,7 +22,6 @@ var editor = CodeMirror(document.body, {
   foldGutter: true,
   fullScreen: true,
   gutters: [
-    'CodeMirror-lint-markers',
     'CodeMirror-foldgutter'
   ],
   highlightSelectionMatches: {
@@ -31,7 +30,6 @@ var editor = CodeMirror(document.body, {
   keyMap: 'sublime',
   lineNumbers: true,
   lineWrapping: true,
-  lint: true,
   matchBrackets: true,
   placeholder: true,
   selectionPointer: true,
