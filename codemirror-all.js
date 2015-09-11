@@ -1,3 +1,5 @@
+// anything we could possibly need from Code Mirror
+
 define([
   'codemirror',
   'codemirror/mode/meta',

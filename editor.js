@@ -1,4 +1,4 @@
-// bootstrap CodeMirror and ShareJS
+// editor.js - the JavaScript editor
 
 require('./editor.css!')
 
