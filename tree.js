@@ -4,6 +4,8 @@ require('./tree.css!')
 var sharejs = require('share/lib/client/index')
 var denodeify = require('denodeify')
 
+var COLLECTION = 'files'
+
 function remove(doc) {
   var parts = doc.name.split('/')
   var el = parts.reduce(function(prev, part){
@@ -37,7 +39,7 @@ function add(doc) {
             window.parent.postMessage(JSON.stringify({
               type: 'edit',
               filename: doc.name,
-              collection: 'files'
+              collection: COLLECTION
             }), '*')
           }
         })
@@ -64,10 +66,8 @@ function add(doc) {
   }, document.body)
 }
 
-var COLLECTION = 'files'
-
 var proto = 'ws'
-var socket = new WebSocket(proto + '://' + location.hostname + ':' + location.port)
+var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
 
 share.on('connected', function() {
