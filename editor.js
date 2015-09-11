@@ -7,6 +7,7 @@ var editor = CodeMirror(document.body, {
   autofocus: true,
   autoCloseBrackets: true,
   autoCloseTags: true,
+  continueComments: true,
   coverGutterNextToScrollbar: true,
   cursorScrollMargin: 3,
   electricChars: true,
@@ -14,18 +15,31 @@ var editor = CodeMirror(document.body, {
     Left: 'goSoftLeft',
     Right: 'goSoftRight',
     Backspace: 'delSoftBefore',
-    Delete: 'delSoftAfter'
+    Delete: 'delSoftAfter',
+    Enter: 'newlineAndIndentContinueMarkdownList',
+    'Ctrl-Space': 'autocomplete'
   },
   foldGutter: true,
   fullScreen: true,
-  gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+  gutters: [
+    'CodeMirror-lint-markers',
+    'CodeMirror-foldgutter'
+  ],
+  highlightSelectionMatches: {
+    showToken: true
+  },
   keyMap: 'sublime',
   lineNumbers: true,
   lineWrapping: true,
+  lint: true,
   matchBrackets: true,
   placeholder: true,
+  selectionPointer: true,
+  showMatchesOnScrollbar: true,
   showTrailingSpace: true,
   smartIndent: true,
+  styleActiveLine: true,
+  styleSelectedText: true,
   theme: 'monokai'
 })
 
