@@ -11,5 +11,6 @@ function setIndent(editor) {
 }
 
 CodeMirror.defineInitHook(setIndent)
+CodeMirror.defineOption('detectIndent', false, setIndent)
 
 module.exports = setIndent
