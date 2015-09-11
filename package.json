@@ -1,6 +1,6 @@
 {
-  "name": "editor",
-  "version": "1.0.0",
+  "name": "editorjs",
+  "version": "0.0.0",
   "dependencies": {
     "chokidar": "^1.0.5",
     "denodeify": "^1.2.1",
@@ -38,8 +38,10 @@
       "livedb": "npm:livedb@^0.5.13",
       "mime": "npm:mime@^1.3.4",
       "opn": "npm:opn@^3.0.2",
+      "promise": "npm:promise@^7.0.4",
       "setimmediate": "npm:setimmediate@^1.0.2",
       "share": "npm:share@^0.7.40",
+      "stream": "github:jspm/nodelibs-stream@^0.1.0",
       "underscore": "npm:underscore@^1.8.3",
       "websocket-stream": "npm:websocket-stream@^2.0.2"
     },
@@ -72,6 +74,9 @@
         "map": {
           "express": "@empty"
         }
+      },
+      "npm:ws@0.8.0": {
+        "main": "index.js"
       }
     }
   }
