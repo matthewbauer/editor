@@ -54,7 +54,7 @@ function editDoc(collection, filename) {
     editor.getWrapperElement().style.display = 'inherit'
     editor.setOption('share', doc.createContext())
     editor.setOption('detectIndent', true)
-    editor.setOption('fileName', filename)
+    editor.setOption('mode', CodeMirror.findModeByFileName(filename).mode)
   })
 }
 

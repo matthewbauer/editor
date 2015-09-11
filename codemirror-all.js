@@ -4,7 +4,6 @@ define([
   'codemirror',
   'codemirror/mode/meta',
   './detect-indent',
-  './detect-mode',
   './load-share',
   './soft-nav',
   'codemirror/keymap/emacs',
