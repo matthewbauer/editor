@@ -3,7 +3,6 @@
 define([
   'codemirror',
   'codemirror/mode/meta',
-  './detect-indent',
   './load-share',
   './soft-nav',
   'codemirror/keymap/emacs',

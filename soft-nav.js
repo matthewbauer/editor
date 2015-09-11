@@ -5,20 +5,20 @@ var CodeMirror = require('codemirror')
 var _ = require('underscore')
 
 function getColOffset(pos) {
-    var line = this.getRange({line: pos.line, ch: 0}, pos)
-    var tabSize = null
-    var column  = 0
+  var line = this.getRange({line: pos.line, ch: 0}, pos)
+  var tabSize = null
+  var column  = 0
 
-    for (var i = 0; i < line.length; i++) {
-      if (line[i] === '\t') {
-        if (tabSize === null)
-          tabSize = this.getOption('indentUnit')
-        if (tabSize > 0)
-          column += (tabSize - (column % tabSize))
-        } else
-          column++
-    }
-    return column
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === '\t') {
+      if (tabSize === null)
+        tabSize = this.getOption('indentUnit')
+      if (tabSize > 0)
+        column += (tabSize - (column % tabSize))
+    } else
+      column++
+  }
+  return column
 }
 
 function getCursorPos(expandTabs, which) {
@@ -67,12 +67,12 @@ function softNav(direction, functionName) {
       var line = this.getLine(sel.start.line)
       var jump = (indentUnit === 0) ? 1 : sel.start.ch % indentUnit
       if (line.substr(0, sel.start.ch).search(/\S/) !== -1)
-          jump = null
+        jump = null
       else if (direction === 1) {
-          if (indentUnit)
-            jump = indentUnit - jump
-          if (sel.start.ch + jump > line.length || line.substr(sel.start.ch, jump).search(/\S/) !== -1)
-            jump = null
+        if (indentUnit)
+          jump = indentUnit - jump
+        if (sel.start.ch + jump > line.length || line.substr(sel.start.ch, jump).search(/\S/) !== -1)
+          jump = null
       } else {
         if (jump === 0)
           jump = indentUnit

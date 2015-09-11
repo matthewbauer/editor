@@ -25,6 +25,7 @@ var editor = CodeMirror(document.body, {
   foldGutter: true,
   fullScreen: true,
   gutters: [
+    'CodeMirror-linenumbers',
     'CodeMirror-foldgutter'
   ],
   highlightSelectionMatches: {
@@ -64,18 +65,24 @@ function loadDoc(collection, filename) {
   })
 }
 
+var detectIndent = require('detect-indent')
+
 function editDoc(collection, filename) {
   return loadDoc(collection, filename).then(function(doc) {
     editor.setOption('share', doc.createContext())
-    editor.setOption('detectIndent', true)
-    editor.setOption('mode', CodeMirror.findModeByFileName(filename).mode)
+    var indent = detectIndent(editor.getValue())
+    editor.setOption('indentUnit', indent.amount)
+    editor.setOption('indentWithTabs', indent.type === 'tab')
+    var mode = CodeMirror.findModeByFileName(filename)
+    if (mode)
+      editor.setOption('mode', mode.mode)
   })
 }
 
 if (location.search !== '')
-  editDoc('files', location.search.substr(1))
+  ('files', location.search.substr(1))
 else if (location.hash !== '')
-  editDoc('files', location.hash.substr(1))
+  ('files', location.hash.substr(1))
 
 window.addEventListener('message', function(event) {
   if (!event.data)
