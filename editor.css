@@ -7,3 +7,7 @@
 .CodeMirror-empty {
   display: none;
 }
+
+.CodeMirror-gutters {
+  background: #333 !important;
+}
