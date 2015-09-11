@@ -16,7 +16,6 @@ var editor = CodeMirror(document.body, {
     Right: 'goSoftRight',
     Backspace: 'delSoftBefore',
     Delete: 'delSoftAfter',
-    Enter: 'newlineAndIndentContinueMarkdownList',
     'Ctrl-Space': 'autocomplete',
     'Ctrl-\\': function() {
       if (window.parent !== window)
