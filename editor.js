@@ -30,13 +30,12 @@ editor.getWrapperElement().style.display = 'none'
 var sharejs = require('share/lib/client/index')
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
-
-var docs = {files: {}}
+var doc
 
 function loadDoc(collection, filename) {
-  if (docs[collection][filename])
-    return Promise.resolve(docs[collection][filename])
-  var doc = share.get(collection, filename)
+  if (doc)
+    doc.unsubscribe()
+  doc = share.get(collection, filename)
   doc.subscribe()
   return new Promise(function(resolve, reject) {
     doc.whenReady(function() {
@@ -50,7 +49,6 @@ function loadDoc(collection, filename) {
 
 function editDoc(collection, filename) {
   return loadDoc(collection, filename).then(function(doc) {
-    docs[collection][filename] = doc
     editor.getWrapperElement().style.display = 'inherit'
     editor.setOption('share', doc.createContext())
     editor.setOption('detectIndent', true)
