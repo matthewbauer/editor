@@ -23,11 +23,11 @@ var editor = CodeMirror(document.body, {
   lineNumbers: true,
   lineWrapping: true,
   matchBrackets: true,
+  placeholder: true,
   showTrailingSpace: true,
   smartIndent: true,
   theme: 'monokai'
 })
-editor.getWrapperElement().style.display = 'none'
 
 var sharejs = require('share/lib/client/index')
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
@@ -51,7 +51,6 @@ function loadDoc(collection, filename) {
 
 function editDoc(collection, filename) {
   return loadDoc(collection, filename).then(function(doc) {
-    editor.getWrapperElement().style.display = 'inherit'
     editor.setOption('share', doc.createContext())
     editor.setOption('detectIndent', true)
     editor.setOption('mode', CodeMirror.findModeByFileName(filename).mode)

@@ -3,3 +3,7 @@
   line-height: 1.5;
   font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier;
 }
+
+.CodeMirror-empty {
+  display: none;
+}
