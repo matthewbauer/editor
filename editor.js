@@ -60,6 +60,8 @@ function editDoc(collection, filename) {
 
 if (location.search !== '')
   editDoc('files', location.search.substr(1))
+else if (location.hash !== '')
+  editDoc('files', location.hash.substr(1))
 
 window.addEventListener('message', function(event) {
   if (!event.data)

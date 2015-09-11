@@ -25,6 +25,8 @@ function add(doc) {
         el.classList.add('extension-' + part.substr(part.lastIndexOf('.') + 1))
         el.classList.add('file')
         el.classList.add('file-' + part)
+        if (part === location.hash.substr(1))
+          el.classList.add('selected')
         el.addEventListener('click', function(event) {
           Array.prototype.forEach.call(document.getElementsByClassName('selected'), function(el) {
             el.classList.remove('selected')
