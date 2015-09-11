@@ -1,7 +1,14 @@
-// some basic help, better styling needed
+// detect the 'mode' to use based on file extension
 
-require('./help.css!')
+var CodeMirror = require('codemirror')
+var mime = require('mime')
 
-var text = document.createElement('div')
-text.textContent = 'click a file to the left to edit'
-document.body.appendChild(text)
+function detectMode(editor, fileName) {
+  var fileName = fileName || editor.getOption('fileName')
+  if (fileName)
+    editor.setOption('mode', mime.lookup(editor.getOption('fileName')))
+}
+
+CodeMirror.defineOption('fileName', undefined, detectMode)
+
+module.exports = detectMode
