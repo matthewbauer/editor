@@ -38,7 +38,7 @@ var ignore
 chokidar.watch(process.cwd(), {
   cwd: process.cwd()
 }).on('all', function(event, path) {
-  if (ignore && ignore.denies(path) || path.indexOf('.git/') === 0)
+  if (ignore && ignore.denies(path) || path[0] === '.')
     return
   if (event === 'add')
     return Promise.resolve().then(function() {
