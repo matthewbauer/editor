@@ -5,6 +5,8 @@ var denodeify = require('denodeify')
 
 var COLLECTION = 'files'
 
+var use_editor = window.parent === window
+
 function remove(doc) {
   var parts = doc.name.split('/')
   var el = parts.reduce(function(prev, part){
@@ -17,6 +19,7 @@ function remove(doc) {
 function add(doc) {
   var parts = doc.name.split('/')
   parts.reduce(function(prev, part, index) {
+    part = encodeURIComponent(part)
     var el = prev.getElementsByClassName(part)[0]
     if (!el) {
       if (index === parts.length - 1) {
@@ -29,6 +32,8 @@ function add(doc) {
         if (part === location.hash.substr(1))
           el.classList.add('selected')
         el.addEventListener('click', function(event) {
+          if (event.ctrlKey || event.metaKey)
+            return
           Array.prototype.forEach.call(document.getElementsByClassName('selected'), function(el) {
             el.classList.remove('selected')
           })
@@ -42,8 +47,10 @@ function add(doc) {
             }), '*')
           }
         })
-        el.setAttribute('href', 'editor?' + doc.name)
-        el.setAttribute('target', '_blank')
+        if (use_editor)
+          el.setAttribute('href', 'editor?' + doc.name)
+        else
+          el.setAttribute('href', doc.name)
       }
       else {
         el = document.createElement('div')
