@@ -11,3 +11,20 @@
 .CodeMirror-gutters {
   background: #333 !important;
 }
+
+.CodeMirror-lint-marker-error {
+  border-radius: 50%;
+  background: rgb(143, 119, 23);
+  background-image: none !important;
+  margin-left: 8px;
+}
+
+.CodeMirror-lint-marker-multiple {
+  background-image: none !important;
+}
+
+.CodeMirror-lint-markers {
+  position: relative;
+  left: -24px;
+  width: 0 !important;
+}

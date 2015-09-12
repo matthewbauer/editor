@@ -1,6 +1,5 @@
 // better styling needed!
 require('./tree.css!')
-
 var sharejs = require('share/lib/client/index')
 var denodeify = require('denodeify')
 
@@ -66,7 +65,6 @@ function add(doc) {
   }, document.body)
 }
 
-var proto = 'ws'
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
 
@@ -79,9 +77,5 @@ share.on('connected', function() {
   })
   query.on('remove', function(documents) {
     documents.forEach(remove)
-  })
-  query.on('move', function(data) {
-  })
-  query.on('change', function(data) {
   })
 })

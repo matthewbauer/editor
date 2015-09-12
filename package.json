@@ -7,9 +7,8 @@
     "ecstatic": "^0.8.0",
     "gitignore-parser": "0.0.2",
     "jspm": "^0.16.2",
-    "livedb": "^0.5.13",
+    "livedb": "matthewbauer/livedb#patch-1",
     "opn": "^3.0.2",
-    "promise": "^7.0.4",
     "share": "^0.7.40",
     "websocket-stream": "matthewbauer/websocket-stream#json"
   },
@@ -32,13 +31,13 @@
       "denodeify": "npm:denodeify@^1.2.1",
       "detect-indent": "npm:detect-indent@^4.0.0",
       "ecstatic": "npm:ecstatic@^0.8.0",
+      "eslint": "github:matthewbauer/eslint@browser",
       "fs": "github:jspm/nodelibs-fs@^0.1.2",
       "gitignore-parser": "npm:gitignore-parser@^0.0.2",
       "http": "github:jspm/nodelibs-http@^1.7.1",
       "livedb": "npm:livedb@^0.5.13",
       "mime": "npm:mime@^1.3.4",
       "opn": "npm:opn@^3.0.2",
-      "promise": "npm:promise@^7.0.4",
       "setimmediate": "npm:setimmediate@^1.0.2",
       "share": "npm:share@^0.7.40",
       "stream": "github:jspm/nodelibs-stream@^0.1.0",
@@ -77,6 +76,10 @@
       },
       "npm:ws@0.8.0": {
         "main": "index.js"
+      },
+      "github:matthewbauer/eslint@browser": {
+        "registry": "npm",
+        "main": "lib/eslint"
       }
     }
   }

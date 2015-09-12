@@ -1,8 +1,10 @@
 // editor.js - the JavaScript editor
 
 require('./editor.css!')
-
+var detectIndent = require('detect-indent')
 var CodeMirror = require('./codemirror-all')
+var sharejs = require('share/lib/client/index')
+
 var editor = CodeMirror(document.body, {
   autofocus: true,
   autoCloseBrackets: true,
@@ -26,7 +28,8 @@ var editor = CodeMirror(document.body, {
   fullScreen: true,
   gutters: [
     'CodeMirror-linenumbers',
-    'CodeMirror-foldgutter'
+    'CodeMirror-foldgutter',
+    'CodeMirror-lint-markers'
   ],
   highlightSelectionMatches: {
     showToken: true
@@ -34,6 +37,8 @@ var editor = CodeMirror(document.body, {
   keyMap: 'sublime',
   lineNumbers: true,
   lineWrapping: true,
+  lint: true,
+  lintOnChange: true,
   matchBrackets: true,
   placeholder: true,
   selectionPointer: true,
@@ -45,12 +50,11 @@ var editor = CodeMirror(document.body, {
   theme: 'monokai'
 })
 
-var sharejs = require('share/lib/client/index')
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
-var doc
 
-function loadDoc(collection, filename) {
+var doc
+function editDoc(collection, filename) {
   if (doc)
     doc.unsubscribe()
   doc = share.get(collection, filename)
@@ -62,13 +66,7 @@ function loadDoc(collection, filename) {
       else
         resolve(doc)
     })
-  })
-}
-
-var detectIndent = require('detect-indent')
-
-function editDoc(collection, filename) {
-  return loadDoc(collection, filename).then(function(doc) {
+  }).then(function(doc) {
     editor.setOption('share', doc.createContext())
     var indent = detectIndent(editor.getValue())
     editor.setOption('indentUnit', indent.amount)
@@ -80,9 +78,9 @@ function editDoc(collection, filename) {
 }
 
 if (location.search !== '')
-  ('files', location.search.substr(1))
+  editDoc('files', location.search.substr(1))
 else if (location.hash !== '')
-  ('files', location.hash.substr(1))
+  editDoc('files', location.hash.substr(1))
 
 window.addEventListener('message', function(event) {
   if (!event.data)
