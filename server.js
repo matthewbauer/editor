@@ -19,9 +19,14 @@ else
 var ec1 = ecstatic(__dirname)
 var ec2 = ecstatic(directory)
 server.on('request', function(request, response) {
-  ec1(request, response, function() {
-    ec2(request, response)
-  })
+  if (request.url === '/index.html')
+    ec2(request, response, function() {
+      ec1(request, response)
+    })
+  else
+    ec1(request, response, function() {
+      ec2(request, response)
+    })
 })
 
 var backend = livedb.client(livedb.memory())
