@@ -1,20 +1,16 @@
 require('./index.css!')
 
 var tree = document.createElement('iframe')
-tree.style.width = '20%'
-tree.setAttribute('src', './tree' + location.hash)
+tree.style['min-width'] = '200px'
+tree.setAttribute('src', './tree.html' + location.hash)
 tree.classList.add('tree')
 document.body.appendChild(tree)
 
 var editor = document.createElement('iframe')
-editor.style.width = '80%'
-editor.setAttribute('src', './editor' + location.hash)
+editor.style.flex = 1
+editor.setAttribute('src', './editor.html' + location.hash)
 editor.classList.add('editor')
 document.body.appendChild(editor)
-
-window.addEventListener('contextmenu', function(event) {
-  event.preventDefault()
-})
 
 window.addEventListener('message', function(event) {
   if (event.data === 'toggleTree') {

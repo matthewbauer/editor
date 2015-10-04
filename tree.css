@@ -16,4 +16,11 @@ html, body {
 .entry {
   display: block;
   text-transform: none;
+  text-align: left;
+  padding-left: 25px;
+  color: #999 !important;
+}
+
+.entry::before {
+  margin-right: 15px;
 }

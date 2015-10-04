@@ -36,7 +36,7 @@ var editor = CodeMirror(document.body, {
   },
   keyMap: 'sublime',
   lineNumbers: true,
-  lineWrapping: true,
+  lineWrapping: false,
   lint: true,
   lintOnChange: true,
   matchBrackets: true,
@@ -81,10 +81,6 @@ if (location.search !== '')
   editDoc('files', location.search.substr(1))
 else if (location.hash !== '')
   editDoc('files', location.hash.substr(1))
-
-window.addEventListener('contextmenu', function(event) {
-  event.preventDefault()
-})
 
 window.addEventListener('message', function(event) {
   if (!event.data)

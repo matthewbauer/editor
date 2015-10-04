@@ -9,6 +9,7 @@ html, body {
   line-height: 1.5;
   font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier;
   overflow: hidden;
+  display: flex;
 }
 
 iframe {

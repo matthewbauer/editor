@@ -2,9 +2,14 @@
 require('material-design-lite/material.min')
 require('material-design-lite/material.min.css!')
 
+require('octicons/octicons/octicons.css!')
+require('./icons.less!')
 require('./tree.css!')
+
 var sharejs = require('share/lib/client/index')
 var denodeify = require('denodeify')
+
+document.body.classList.add('tree-view')
 
 var COLLECTION = 'files'
 
@@ -28,7 +33,8 @@ function add(doc) {
       if (index === parts.length - 1) {
         el = document.createElement('a')
         el.textContent = part
-        el.classList.add('mdl-button', 'mdl-button--colored', 'mdl-js-button', 'mdl-js-ripple-effect', 'entry', 'file', 'file-' + part, 'extension-' + part.substr(part.lastIndexOf('.') + 1))
+        el.setAttribute('data-name', part)
+        el.classList.add('mdl-button', 'mdl-button--colored', 'mdl-js-button', 'mdl-js-ripple-effect', 'entry', 'file', 'list-item', 'icon-file-text', 'icon-file-media')
         if (part === location.hash.substr(1))
           el.classList.add('selected')
         el.addEventListener('click', function(event) {
@@ -48,7 +54,7 @@ function add(doc) {
           }
         })
         if (use_editor)
-          el.setAttribute('href', 'editor?' + doc.name)
+          el.setAttribute('href', 'editor.html?' + doc.name)
         else
           el.setAttribute('href', doc.name)
       }
@@ -70,10 +76,6 @@ function add(doc) {
     return el
   }, document.body)
 }
-
-window.addEventListener('contextmenu', function(event) {
-  event.preventDefault()
-})
 
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)
