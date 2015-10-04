@@ -1,4 +1,7 @@
 // better styling needed!
+require('material-design-lite/material.min')
+require('material-design-lite/material.min.css!')
+
 require('./tree.css!')
 var sharejs = require('share/lib/client/index')
 var denodeify = require('denodeify')
@@ -24,11 +27,8 @@ function add(doc) {
     if (!el) {
       if (index === parts.length - 1) {
         el = document.createElement('a')
-        el.classList.add('entry')
         el.textContent = part
-        el.classList.add('extension-' + part.substr(part.lastIndexOf('.') + 1))
-        el.classList.add('file')
-        el.classList.add('file-' + part)
+        el.classList.add('mdl-button', 'mdl-button--colored', 'mdl-js-button', 'mdl-js-ripple-effect', 'entry', 'file', 'file-' + part, 'extension-' + part.substr(part.lastIndexOf('.') + 1))
         if (part === location.hash.substr(1))
           el.classList.add('selected')
         el.addEventListener('click', function(event) {
@@ -54,8 +54,7 @@ function add(doc) {
       }
       else {
         el = document.createElement('div')
-        el.classList.add('directory')
-        el.classList.add('directory-' + part)
+        el.classList.add('directory', 'directory-' + part)
       }
 
       var found = false
@@ -71,6 +70,10 @@ function add(doc) {
     return el
   }, document.body)
 }
+
+window.addEventListener('contextmenu', function(event) {
+  event.preventDefault()
+})
 
 var socket = new WebSocket('ws://' + location.hostname + ':' + location.port)
 var share = new sharejs.Connection(socket)

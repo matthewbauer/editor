@@ -82,6 +82,10 @@ if (location.search !== '')
 else if (location.hash !== '')
   editDoc('files', location.hash.substr(1))
 
+window.addEventListener('contextmenu', function(event) {
+  event.preventDefault()
+})
+
 window.addEventListener('message', function(event) {
   if (!event.data)
     return

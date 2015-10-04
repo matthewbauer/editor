@@ -12,18 +12,3 @@ html, body {
   -ms-user-select: none;
   user-select: none;
 }
-
-a, a:visited {
-  color: #f8f8f2;
-  text-decoration: none;
-  cursor: default;
-}
-
-.entry {
-  padding-left: 20px;
-  display: block;
-}
-
-.file.selected {
-  background: #a8f;
-}
