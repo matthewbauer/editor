@@ -12,3 +12,8 @@ html, body {
   -ms-user-select: none;
   user-select: none;
 }
+
+.entry {
+  display: block;
+  text-transform: none;
+}
