@@ -40,7 +40,6 @@ var editor = CodeMirror(document.body, {
   lint: true,
   lintOnChange: true,
   matchBrackets: true,
-  placeholder: true,
   selectionPointer: true,
   showMatchesOnScrollbar: true,
   showTrailingSpace: true,

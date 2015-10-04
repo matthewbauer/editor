@@ -3,7 +3,7 @@ require('material-design-lite/material.min')
 require('material-design-lite/material.min.css!')
 
 require('octicons/octicons/octicons.css!')
-require('./icons.less!')
+require('./icons.css!')
 require('./tree.css!')
 
 var sharejs = require('share/lib/client/index')

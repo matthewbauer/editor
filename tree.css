@@ -1,4 +1,4 @@
-html, body {
+.tree-view {
   background: #272822;
   color: #f8f8f2;
   font-size: 16px;
@@ -13,7 +13,7 @@ html, body {
   user-select: none;
 }
 
-.entry {
+.list-item {
   display: block;
   text-transform: none;
   text-align: left;

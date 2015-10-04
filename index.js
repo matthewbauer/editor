@@ -1,5 +1,7 @@
 require('./index.css!')
 
+document.body.classList.add('index')
+
 var tree = document.createElement('iframe')
 tree.style['min-width'] = '200px'
 tree.setAttribute('src', './tree.html' + location.hash)

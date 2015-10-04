@@ -16,8 +16,11 @@ if (process.argv.length > 2)
 else
   directory = process.cwd()
 
-var ec1 = ecstatic(__dirname)
-var ec2 = ecstatic(directory)
+var opts = {
+  gzip: true
+}
+var ec1 = ecstatic(__dirname, opts)
+var ec2 = ecstatic(directory, opts)
 server.on('request', function(request, response) {
   if (request.url === '/index.html')
     ec2(request, response, function() {
