@@ -39,6 +39,6 @@ var wss = websocket.createServer({server: server}, function(stream) {
 
 fsWatcher(directory, backend.collection('files'))
 
-var port = process.env.PORT || process.argv[3] || 8080
+var port = process.env.PORT || 8080
 server.listen(port)
 opn('http://localhost:' + port)
