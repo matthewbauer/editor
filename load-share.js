@@ -10,7 +10,7 @@ function hookShare(cm, share) {
   if (cm.detachShareJsDoc)
     cm.detachShareJsDoc()
 
-  cm.setValue(share.get())
+  cm.swapDoc(CodeMirror.Doc(share.get()))
 
   var suppress = false
 
