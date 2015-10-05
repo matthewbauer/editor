@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var http = require('http')
+var http2 = require('http2')
 var ecstatic = require('ecstatic')
 var livedb = require('livedb')
 var share = require('share')
@@ -8,7 +8,7 @@ var websocket = require('websocket-stream')
 var fsWatcher = require('./fs-watcher')
 var opn = require('opn')
 
-var server = http.createServer()
+var server = http2.createServer()
 
 var directory
 if (process.argv.length > 2)
@@ -17,7 +17,6 @@ else
   directory = process.cwd()
 
 var opts = {
-  gzip: true
 }
 var ec1 = ecstatic(__dirname, opts)
 var ec2 = ecstatic(directory, opts)

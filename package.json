@@ -6,6 +6,7 @@
     "denodeify": "^1.2.1",
     "ecstatic": "^0.8.0",
     "gitignore-parser": "0.0.2",
+    "http2": "^3.2.0",
     "jspm": "^0.16.2",
     "livedb": "matthewbauer/livedb#patch-1",
     "opn": "^3.0.2",
